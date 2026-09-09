@@ -1,175 +1,859 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Roception | Advanced Tactile Sensing for Robotics</title>
-  <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Inter Font -->
-  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roception | Tactile Sensors & AI Touch Data for Robotics</title>
+    <!-- Google Fonts for Bold, Dynamic Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS Variables for Theme */
+        :root {
+            --bg-dark: #0a0a0c;
+            --bg-card: #141418;
+            --accent: #00E5FF; /* High-tech Cyan */
+            --accent-hover: #00b8cc;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a5;
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--text-main);
+            transition: color 0.3s ease;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Reusable Components */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-padding {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .section-title span {
+            color: var(--accent);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 60px;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: scale(1.05);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            clip-path: none;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        /* Navbar */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 12, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Updated Logo Styles */
+        .logo img {
+            max-height: 50px;
+            width: auto;
+            object-fit: contain;
+            transform-origin: left center;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links li a {
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links li a:hover {
+            color: var(--accent);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(10, 10, 12, 0.8), rgba(10, 10, 12, 0.9)), url('https://images.unsplash.com/photo-1531746790731-6c087fecd65a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+            display: block;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 650px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background-color: var(--bg-card);
+            padding: 40px 30px;
+            text-align: center;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-bottom: 3px solid var(--accent);
+            background-color: #1a1a20;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* AI Data Section */
+        .ai-data-section {
+            background-color: #111115;
+            border-top: 1px solid rgba(0, 229, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+        }
+
+        .split-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .ai-content h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .ai-content h2 span {
+            color: var(--accent);
+        }
+
+        .ai-content p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .ai-content ul {
+            list-style: none;
+            margin-top: 30px;
+            margin-bottom: 40px;
+        }
+
+        .ai-content ul li {
+            margin-bottom: 15px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .ai-content ul li i {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .ai-image {
+            position: relative;
+        }
+
+        .ai-image img {
+            border-radius: 5px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .ai-image::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100%;
+            height: 100%;
+            border: 3px solid var(--accent);
+            z-index: -1;
+            border-radius: 5px;
+        }
+
+        /* Products Section */
+        .products {
+            background-color: var(--bg-dark);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--bg-card);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img {
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+
+        .product-content {
+            padding: 30px;
+        }
+
+        .product-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .product-content p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .product-link {
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .product-link:hover {
+            color: var(--text-main);
+        }
+
+        /* Specs/Pricing Section */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .pricing-card {
+            background-color: var(--bg-card);
+            padding: 50px 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card.featured {
+            border: 2px solid var(--accent);
+            transform: scale(1.05);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-family: var(--font-heading);
+            font-weight: 900;
+            color: var(--accent);
+            margin-bottom: 30px;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+
+        .pricing-features li {
+            margin-bottom: 15px;
+            color: var(--text-muted);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 15px;
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            background: linear-gradient(45deg, var(--accent), #008b99);
+            padding: 80px 0;
+            text-align: center;
+            color: var(--bg-dark);
+        }
+
+        .cta-banner h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--bg-dark);
+        }
+
+        .cta-banner .btn {
+            background-color: var(--bg-dark);
+            color: var(--accent);
+            margin-top: 20px;
+        }
+
+        .cta-banner .btn:hover {
+            background-color: var(--text-main);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #050506;
+            padding: 80px 0 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-col .logo img {
+            max-height: 65px; 
+            width: auto;
+            object-fit: contain;
+            transform-origin: left center;
+        }
+
+        .footer-col h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+            margin-top: 15px;
+        }
+
+        .footer-col p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--bg-card);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--accent);
+            color: var(--bg-dark);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 3.5rem; }
+            .pricing-card.featured { transform: scale(1); }
+            .split-grid { grid-template-columns: 1fr; gap: 40px; }
+            .ai-image::after { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; 
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--bg-dark);
+                flex-direction: column;
+                align-items: center;
+                padding: 30px 0;
+                gap: 20px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .logo img {
+                max-height: 40px; 
+            }
+
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { font-size: 1rem; }
+            .section-title { font-size: 2rem; }
+            .ai-content h2 { font-size: 2rem; }
+            
+            .hero-btns {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .btn { width: 100%; text-align: center; }
+        }
+    </style>
 </head>
-<body class="bg-slate-950 text-slate-100 antialiased selection:bg-cyan-500 selection:text-slate-950">
+<body>
 
-  <!-- Navigation -->
-  <nav class="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-      <a href="#" class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-        <span class="w-3 h-3 rounded-full bg-cyan-400 animate-pulse"></span>
-        ROCEPTION
-      </a>
-      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-        <a href="#technology" class="hover:text-cyan-400 transition-colors">Technology</a>
-        <a href="#applications" class="hover:text-cyan-400 transition-colors">Applications</a>
-        <a href="#specs" class="hover:text-cyan-400 transition-colors">Specifications</a>
-      </div>
-      <a href="#contact" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-cyan-500/20">
-        Request Demo
-      </a>
-    </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <section class="pt-36 pb-24 px-6 relative overflow-hidden">
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(6,182,212,0.15),transparent_50%)]"></div>
-    <div class="max-w-7xl mx-auto text-center relative z-10">
-      <span class="inline-block px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-6">
-        Next-Generation Optical-Tactile Intelligence
-      </span>
-      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-tight">
-        Giving Robots High-Resolution Touch
-      </h1>
-      <p class="mt-6 text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto font-normal">
-        Roception develops sub-millimeter tactile and force-sensing solutions engineered for delicate robotic manipulation, grasping, and industrial automation.
-      </p>
-      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a href="#contact" class="w-full sm:w-auto bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-8 py-3.5 rounded-xl font-semibold shadow-lg shadow-cyan-500/25 transition-all">
-          Inquire for Evaluation Kit
-        </a>
-        <a href="#technology" class="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white border border-slate-800 px-8 py-3.5 rounded-xl font-semibold transition-all">
-          Explore Technology
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Technology / Demo Placeholder Section -->
-  <section id="technology" class="py-20 px-6 border-t border-slate-900 bg-slate-900/40">
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl sm:text-4xl font-bold text-white">Precision Tactile Sensing</h2>
-        <p class="mt-4 text-slate-400">Combining high-density optical arrays with soft elastomer membranes for real-time contact dynamics.</p>
-      </div>
-
-      <!-- Video / Visual Placeholder Card -->
-      <div class="relative rounded-2xl border border-slate-800 bg-slate-900 overflow-hidden shadow-2xl max-w-4xl mx-auto">
-        <div class="aspect-video bg-slate-950 flex flex-col items-center justify-center p-8 text-center group cursor-pointer">
-          <div class="w-16 h-16 rounded-full bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <svg class="w-8 h-8 text-cyan-400 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-          <p class="text-slate-300 font-medium">Demo Video Placeholder</p>
-          <p class="text-xs text-slate-500 mt-1">Replace with an embedded MP4 or GIF showing real-time tactile contact mapping</p>
+    <!-- Header / Navigation -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <img src="https://i.ibb.co/zT4L7Crh/Logo-White.jpg" alt="Roception Logo">
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Technology</a></li>
+                <li><a href="#ai-data">AI Touch Data</a></li>
+                <li><a href="#products">Ecosystem</a></li>
+                <li><a href="#pricing">Dev Kits</a></li>
+            </ul>
+            <a href="#contact" class="btn btn-primary" style="padding: 10px 20px; font-size: 0.8rem; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%); display: none;">Request Demo</a>
+            <div class="mobile-menu-btn" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </header>
 
-  <!-- Technical Features Grid -->
-  <section class="py-20 px-6">
-    <div class="max-w-7xl mx-auto">
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="bg-slate-900/80 p-8 rounded-2xl border border-slate-800 hover:border-slate-700 transition-colors">
-          <div class="w-12 h-12 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mb-6 font-bold">01</div>
-          <h3 class="text-xl font-bold text-white mb-3">Sub-Millimeter Resolution</h3>
-          <p class="text-slate-400 text-sm leading-relaxed">Captures granular surface textures, slip detection, and 3D contact geometry with minimal signal noise.</p>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container hero-content">
+            <h1>Giving Robots the Sense of <span>Touch & Smell</span></h1>
+            <p>Empower your autonomous systems with magnetic-based tactile skin and laser-assisted e-noses. Roception is pioneering the world's first physical touch datasets to train the next generation of humanoid robots.</p>
+            <div class="hero-btns">
+                <a href="#ai-data" class="btn btn-primary">Discover AI Datasets</a>
+                <a href="#products" class="btn btn-outline">Explore Hardware</a>
+            </div>
         </div>
+    </section>
 
-        <div class="bg-slate-900/80 p-8 rounded-2xl border border-slate-800 hover:border-slate-700 transition-colors">
-          <div class="w-12 h-12 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mb-6 font-bold">02</div>
-          <h3 class="text-xl font-bold text-white mb-3">Ultra-Low Latency</h3>
-          <p class="text-slate-400 text-sm leading-relaxed">High-frame-rate feedback pipelines allow real-time reactive force control in closed-loop manipulation tasks.</p>
+    <!-- Features Section -->
+    <section id="features" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Sensory <span>Breakthroughs</span></h2>
+            <p class="section-subtitle">Beyond vision. How Roception is reshaping environmental interaction.</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-hand-holding feature-icon"></i>
+                    <h3>Magnetic Tactile Arrays</h3>
+                    <p>Our tactile sensors utilize complex magnetic field mapping, allowing grippers to measure high-resolution 3D shear and normal forces without optical occlusion.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-wind feature-icon"></i>
+                    <h3>Electro-Laser Olfaction</h3>
+                    <p>Combining highly sensitive electrochemical cells with precision laser spectroscopy to identify trace volatile organic compounds (VOCs) and gas signatures.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt feature-icon"></i>
+                    <h3>Industrial Durability</h3>
+                    <p>Unlike optical tactile sensors, our magnetic skins are immune to oil, dirt, and mechanical fatigue, making them perfect for harsh manufacturing environments.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-microchip feature-icon"></i>
+                    <h3>Edge Sensor Fusion</h3>
+                    <p>On-board processing algorithms translate raw magnetic and chemical data into clean, actionable data streams for native ROS2 integration.</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="bg-slate-900/80 p-8 rounded-2xl border border-slate-800 hover:border-slate-700 transition-colors">
-          <div class="w-12 h-12 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mb-6 font-bold">03</div>
-          <h3 class="text-xl font-bold text-white mb-3">Rugged Elastomer Form</h3>
-          <p class="text-slate-400 text-sm leading-relaxed">Designed for field deployment, offering high durability and easily replaceable tactile skin cartridges.</p>
+    <!-- AI Data Section -->
+    <section id="ai-data" class="ai-data-section section-padding">
+        <div class="container split-grid">
+            <div class="ai-content">
+                <h2>The Missing Sense in <span>Humanoid AI</span></h2>
+                <p>Vision-language models have successfully mapped the visual world, but humanoid robots remain crippled by a fundamental lack of physical understanding. <strong>Currently, there is a massive industry-wide shortage of high-fidelity touch data required to train autonomous manipulation models.</strong></p>
+                <p>Roception is changing this. By integrating our MagTouch™ sensors into operational robotic fleets, we are actively harvesting the world's first large-scale, real-world physical interaction dataset.</p>
+                
+                <ul>
+                    <li><i class="fas fa-database"></i> <strong>Pioneering Datasets:</strong> Millions of annotated shear, normal force, and texture parameters.</li>
+                    <li><i class="fas fa-robot"></i> <strong>Humanoid Ready:</strong> Train your Embodied AI models for complex, delicate object manipulation.</li>
+                    <li><i class="fas fa-network-wired"></i> <strong>Data API Access:</strong> Feed continuous, physical-world interaction data directly into your neural networks.</li>
+                </ul>
+                
+                <a href="#contact" class="btn btn-outline">Request Data Sample</a>
+            </div>
+            <div class="ai-image">
+                <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Robot Hand Touching Object">
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Applications Section -->
-  <section id="applications" class="py-20 px-6 border-t border-slate-900 bg-slate-900/40">
-    <div class="max-w-7xl mx-auto">
-      <h2 class="text-3xl font-bold text-white mb-12 text-center">Key Robotic Applications</h2>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="p-6 rounded-xl bg-slate-900 border border-slate-800">
-          <h4 class="text-lg font-semibold text-white mb-2">Robotic Grasping</h4>
-          <p class="text-xs text-slate-400">Prevents damage to fragile or soft objects in industrial pick-and-place tasks.</p>
+    <!-- Products Section -->
+    <section id="products" class="products section-padding">
+        <div class="container">
+            <h2 class="section-title">The Roception <span>Ecosystem</span></h2>
+            <p class="section-subtitle">Hardware and data bridging the physical-digital divide</p>
+
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Magnetic Tactile Sensor">
+                    </div>
+                    <div class="product-content">
+                        <h3>MagTouch™ Tactile Skin</h3>
+                        <p>Flexible, high-density magnetic sensor arrays that give robotic end-effectors human-like touch sensitivity. Detects slip, texture, and force instantly.</p>
+                        <a href="#" class="product-link">View Specs <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="E-Nose Sensor">
+                    </div>
+                    <div class="product-content">
+                        <h3>AuraSense™ E-Nose</h3>
+                        <p>A hybrid electrochemical and laser-based electronic nose. Rapidly detects hazardous gas leaks, monitors food ripeness, or identifies complex chemical mixtures.</p>
+                        <a href="#" class="product-link">View Specs <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Roception Fusion Core">
+                    </div>
+                    <div class="product-content">
+                        <h3>Roception Fusion Core</h3>
+                        <p>A compact logic board designed to ingest, synchronize, and compute data from both the tactile skin and e-nose simultaneously at the edge.</p>
+                        <a href="#" class="product-link">View Specs <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- Product 4 (Data) -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Data Analytics and API">
+                    </div>
+                    <div class="product-content">
+                        <h3>TouchDB™ Data API</h3>
+                        <p>Access our proprietary, ever-growing dataset of physical world interactions. Train your Embodied AI and humanoid models with millions of annotated tactile data points.</p>
+                        <a href="#" class="product-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="p-6 rounded-xl bg-slate-900 border border-slate-800">
-          <h4 class="text-lg font-semibold text-white mb-2">Precision Assembly</h4>
-          <p class="text-xs text-slate-400">Enables tight-tolerance insertion and alignment without costly vision calibration.</p>
+    </section>
+
+    <!-- Pricing/Kits Section -->
+    <section id="pricing" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Developer <span>Kits</span></h2>
+            <p class="section-subtitle">Start prototyping next-generation perception</p>
+
+            <div class="pricing-grid">
+                <!-- Tier 1 -->
+                <div class="pricing-card">
+                    <h3>Tactile Starter Kit</h3>
+                    <div class="price">$1,299<span>/kit</span></div>
+                    <ul class="pricing-features">
+                        <li>2x MagTouch™ Gripper Pads</li>
+                        <li>Magnetic Field Mapping SDK</li>
+                        <li>ROS2 Tactile Drivers</li>
+                        <li>Community Support</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Order Now</a>
+                </div>
+                <!-- Tier 2 -->
+                <div class="pricing-card featured">
+                    <h3>AI Data & Fusion Innovator</h3>
+                    <div class="price">$4,499<span>/kit</span></div>
+                    <ul class="pricing-features">
+                        <li>2x MagTouch™ + 1x AuraSense™</li>
+                        <li>Roception Fusion Core Board</li>
+                        <li>3-Month TouchDB™ API Access</li>
+                        <li>Priority Engineering Support</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Order Now</a>
+                </div>
+                <!-- Tier 3 -->
+                <div class="pricing-card">
+                    <h3>Olfactory Dev Kit</h3>
+                    <div class="price">$1,899<span>/kit</span></div>
+                    <ul class="pricing-features">
+                        <li>1x AuraSense™ E-Nose Module</li>
+                        <li>Electro-Laser Calibration Tool</li>
+                        <li>Gas Signature Database Access</li>
+                        <li>ROS2 Odor Mapping Node</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Order Now</a>
+                </div>
+            </div>
         </div>
-        <div class="p-6 rounded-xl bg-slate-900 border border-slate-800">
-          <h4 class="text-lg font-semibold text-white mb-2">Surgical Robotics</h4>
-          <p class="text-xs text-slate-400">Provides surgeons with tactile force perception during minimally invasive procedures.</p>
+    </section>
+
+    <!-- Call to Action Banner -->
+    <section class="cta-banner">
+        <div class="container">
+            <h2>Ready to give your humanoids true environmental awareness?</h2>
+            <a href="#contact" class="btn btn-primary">Schedule a Tech & Data Demo</a>
         </div>
-        <div class="p-6 rounded-xl bg-slate-900 border border-slate-800">
-          <h4 class="text-lg font-semibold text-white mb-2">Academic Research</h4>
-          <p class="text-xs text-slate-400">Open API integration for university robotics laboratories studying touch feedback.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="#" class="logo" style="margin-bottom: 20px;">
+                        <img src="https://i.ibb.co/zT4L7Crh/Logo-White.jpg" alt="Roception Logo">
+                    </a>
+                    <p>Pioneering advanced tactile and olfactory perception to bridge the gap between machines and the physical world.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Technology</a></li>
+                        <li><a href="#ai-data">AI Touch Data</a></li>
+                        <li><a href="#products">Hardware & Data API</a></li>
+                        <li><a href="#pricing">Developer Kits</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">TouchDB API Reference</a></li>
+                        <li><a href="#">ROS2 Integration Guide</a></li>
+                        <li><a href="#">Embodied AI Whitepapers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:hello@roception.com"><i class="fas fa-envelope"></i> hello@roception.com</a></li>
+                        <li><a href="https://www.roception.com"><i class="fas fa-globe"></i> www.roception.com</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Innovation Hub, Silicon Valley, CA</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Roception. All Rights Reserved.</p>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </footer>
 
-  <!-- Contact / Inquiry Form -->
-  <section id="contact" class="py-24 px-6 border-t border-slate-900 relative">
-    <div class="max-w-3xl mx-auto bg-slate-900/90 border border-slate-800 p-8 sm:p-12 rounded-2xl shadow-2xl">
-      <h2 class="text-3xl font-bold text-white text-center">Connect with Roception</h2>
-      <p class="mt-2 text-slate-400 text-center text-sm">Request technical datasheets, evaluation kits, or partnership details.</p>
+    <!-- Interactive JS -->
+    <script>
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
 
-      <!-- Powered by Web3Forms (Replace YOUR_ACCESS_KEY with a free key from web3forms.com) -->
-      <form action="https://api.web3forms.com/submit" method="POST" class="mt-8 space-y-6">
-        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
-        <input type="hidden" name="subject" value="New Inquiry from Roception.com">
+        // Smooth Scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // Close mobile menu on click
+                const navLinks = document.getElementById('navLinks');
+                if(navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                }
 
-        <div class="grid sm:grid-cols-2 gap-6">
-          <div>
-            <label class="block text-xs font-semibold uppercase text-slate-400 mb-2">Name</label>
-            <input type="text" name="name" required placeholder="Dr. Jane Doe" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 text-sm">
-          </div>
-          <div>
-            <label class="block text-xs font-semibold uppercase text-slate-400 mb-2">Work Email</label>
-            <input type="email" name="email" required placeholder="jane@lab-or-company.com" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 text-sm">
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold uppercase text-slate-400 mb-2">Organization / University</label>
-          <input type="text" name="organization" placeholder="Robotics Lab / Company Name" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 text-sm">
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold uppercase text-slate-400 mb-2">Message or Technical Requirement</label>
-          <textarea name="message" rows="4" required placeholder="Tell us about your application or hardware requirements..." class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 text-sm"></textarea>
-        </div>
-
-        <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold py-3.5 rounded-lg shadow-lg shadow-cyan-500/20 transition-all">
-          Submit Inquiry
-        </button>
-      </form>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="py-8 px-6 border-t border-slate-900 text-center text-xs text-slate-500">
-    <p>© <script>document.write(new Date().getFullYear())</script> Roception. All rights reserved.</p>
-  </footer>
-
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
