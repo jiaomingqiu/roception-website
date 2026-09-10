@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roception | Home</title>
+    <title>Roception | Technology</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css"> <!-- Links to shared CSS -->
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
 
@@ -28,21 +28,33 @@
         </div>
     </header>
 
-    <section class="hero">
-        <div class="container hero-content">
-            <h1>Giving Robots the Sense of <span>Touch & Smell</span></h1>
-            <p>Empower your autonomous systems with magnetic-based tactile skin and laser-assisted e-noses. Roception is pioneering the world's first physical touch datasets to train the next generation of humanoid robots.</p>
-            <div class="hero-btns">
-                <a href="ai-data.html" class="btn btn-primary">Discover AI Datasets</a>
-                <a href="ecosystem.html" class="btn btn-outline">Explore Hardware</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="cta-banner">
+    <section class="section-padding page-spacer">
         <div class="container">
-            <h2>Ready to give your humanoids true environmental awareness?</h2>
-            <a href="#contact" class="btn btn-primary">Schedule a Tech & Data Demo</a>
+            <h2 class="section-title">Sensory <span>Breakthroughs</span></h2>
+            <p class="section-subtitle">Beyond vision. How Roception is reshaping environmental interaction.</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-hand-holding feature-icon"></i>
+                    <h3>Magnetic Tactile Arrays</h3>
+                    <p>Our tactile sensors utilize complex magnetic field mapping, allowing grippers to measure high-resolution 3D shear and normal forces without optical occlusion.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-wind feature-icon"></i>
+                    <h3>Electro-Laser Olfaction</h3>
+                    <p>Combining highly sensitive electrochemical cells with precision laser spectroscopy to identify trace volatile organic compounds (VOCs) and gas signatures.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt feature-icon"></i>
+                    <h3>Industrial Durability</h3>
+                    <p>Unlike optical tactile sensors, our magnetic skins are immune to oil, dirt, and mechanical fatigue, making them perfect for harsh manufacturing environments.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-microchip feature-icon"></i>
+                    <h3>Edge Sensor Fusion</h3>
+                    <p>On-board processing algorithms translate raw magnetic and chemical data into clean, actionable data streams for native ROS2 integration.</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -80,18 +92,6 @@
         </div>
     </footer>
 
-    <script>
-        function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
-        // Smooth scroll only for footer anchor link
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const target = document.querySelector(this.getAttribute('href'));
-                if(target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-    </script>
+    <script>function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }</script>
 </body>
 </html>

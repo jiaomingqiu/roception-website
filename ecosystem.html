@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roception | Ecosystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="https://i.ibb.co/Ltb2Nsw/Logo.jpg" alt="Roception Logo">
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="technology.html">Technology</a></li>
+                <li><a href="ai-data.html">AI Touch Data</a></li>
+                <li><a href="ecosystem.html">Ecosystem</a></li>
+                <li><a href="dev-kits.html">Dev Kits</a></li>
+            </ul>
+            <div class="mobile-menu-btn" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="products section-padding page-spacer">
+        <div class="container">
+            <h2 class="section-title">The Roception <span>Ecosystem</span></h2>
+            <p class="section-subtitle">Hardware and data bridging the physical-digital divide</p>
+
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img"><img src="https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Magnetic Tactile Sensor"></div>
+                    <div class="product-content">
+                        <h3>MagTouch™ Tactile Skin</h3>
+                        <p>Flexible, high-density magnetic sensor arrays that give robotic end-effectors human-like touch sensitivity. Detects slip, texture, and force instantly.</p>
+                        <a href="#" class="product-link">View Specs <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="E-Nose Sensor"></div>
+                    <div class="product-content">
+                        <h3>AuraSense™ E-Nose</h3>
+                        <p>A hybrid electrochemical and laser-based electronic nose. Rapidly detects hazardous gas leaks, monitors food ripeness, or identifies complex chemical mixtures.</p>
+                        <a href="#" class="product-link">View Specs <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img"><img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Roception Fusion Core"></div>
+                    <div class="product-content">
+                        <h3>Roception Fusion Core</h3>
+                        <p>A compact logic board designed to ingest, synchronize, and compute data from both the tactile skin and e-nose simultaneously at the edge.</p>
+                        <a href="#" class="product-link">View Specs <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Data Analytics and API"></div>
+                    <div class="product-content">
+                        <h3>TouchDB™ Data API</h3>
+                        <p>Access our proprietary, ever-growing dataset of physical world interactions. Train your Embodied AI and humanoid models with millions of annotated tactile data points.</p>
+                        <a href="#" class="product-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo" style="margin-bottom: 20px;">
+                        <img src="https://i.ibb.co/Ltb2Nsw/Logo.jpg" alt="Roception Logo">
+                    </a>
+                    <p>Pioneering advanced tactile and olfactory perception to bridge the gap between machines and the physical world.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="technology.html">Technology</a></li>
+                        <li><a href="ai-data.html">AI Touch Data</a></li>
+                        <li><a href="ecosystem.html">Ecosystem</a></li>
+                        <li><a href="dev-kits.html">Dev Kits</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:hello@roception.com"><i class="fas fa-envelope"></i> hello@roception.com</a></li>
+                        <li><a href="https://www.roception.com"><i class="fas fa-globe"></i> www.roception.com</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Innovation Hub, Silicon Valley, CA</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Roception. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }</script>
+</body>
+</html>
