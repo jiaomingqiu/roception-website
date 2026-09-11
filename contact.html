@@ -27,7 +27,7 @@
         .nav-container { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; display: inline-block; }
         .logo span { color: var(--accent); font-weight: 400; }
-        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links { display: flex; list-style: none; gap: 20px; }
         .nav-links li a { font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
         .nav-links li a:hover { color: var(--accent); }
         .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--text-main); cursor: pointer; }
@@ -96,14 +96,16 @@
             <div class="contact-grid">
                 <div class="contact-form-container">
                     <!-- FormSubmit.co Integration -->
-                    <form id="fs-frm" class="contact-form" action="https://formsubmit.co/[PASTE_YOUR_RANDOM_STRING_HERE]" method="POST">
+                    <form id="fs-frm" class="contact-form" action="https://formsubmit.co/70ed713d03b9b08c750d46e4605cd26e" method="POST">
                         
                         <!-- Honeypot Field -->
                         <input type="text" name="_honey" style="display:none">
+                        
                         <!-- Disable reCAPTCHA -->
                         <input type="hidden" name="_captcha" value="false">
-                        <!-- Success View Template -->
-                        <input type="hidden" name="_template" value="box">
+                        
+                        <!-- Set reply-to to the submitter's email address -->
+                        <input type="hidden" name="_replyto">
 
                         <div class="form-group">
                             <label>Name</label>
@@ -187,6 +189,10 @@
         form.addEventListener('submit', function(e) {
             e.preventDefault(); 
             
+            // Set the hidden reply-to field to match the entered email so you can reply directly to the user
+            const emailInput = form.querySelector('input[name="email"]').value;
+            form.querySelector('input[name="_replyto"]').value = emailInput;
+
             const formData = new FormData(form);
             
             submitBtn.innerText = 'Sending...';
